@@ -1,4 +1,4 @@
-package com.example.task.Stetho
+package com.example.task.stetho
 
 import android.app.Application
 import com.facebook.stetho.Stetho

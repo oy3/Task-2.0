@@ -10,13 +10,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.example.task.data.Task
 import com.example.task.data.TaskDatabase
 import com.example.task.taskDetail.TaskDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), TaskAdapter.TaskSelectionRecyclerViewClickListener {
+class MainActivity : AppCompatActivity(),
+    TaskAdapter.TaskSelectionRecyclerViewClickListener {
     lateinit var db: TaskDatabase
 
 
@@ -47,13 +49,30 @@ class MainActivity : AppCompatActivity(), TaskAdapter.TaskSelectionRecyclerViewC
             refreshList()
         }
         builder.setNegativeButton("No") { dialog, which ->
-        refreshList()
+            refreshList()
         }
 
         val dialog: AlertDialog = builder.create()
 
         dialog.show()
 
+    }
+
+    private fun showHelpDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Help")
+        builder.setMessage(
+            "1. To add task: Click on the add button, a new page will open then add new task." + "\n\n" +
+                    "2. To open task: Click on task in the list." + "\n\n" +
+                    "3. To delete task: Hold on the task you wish to delete for 2 or more seconds, you will feel a vibration then follow the dialog that pops up." + "\n\n" +
+                    "4. To exit the application: Tap your back button twice."
+
+        )
+        builder.setPositiveButton("Okay") { dialog, which ->
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +119,10 @@ class MainActivity : AppCompatActivity(), TaskAdapter.TaskSelectionRecyclerViewC
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                showHelpDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -125,7 +147,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.TaskSelectionRecyclerViewC
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(this, "Tap back again to exit", Toast.LENGTH_SHORT).show()
 
-        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
     private fun refreshList() {
@@ -134,6 +156,5 @@ class MainActivity : AppCompatActivity(), TaskAdapter.TaskSelectionRecyclerViewC
             taskList, this,
             this
         )
-
     }
 }

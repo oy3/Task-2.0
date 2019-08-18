@@ -14,8 +14,6 @@ interface TaskDoa {
     @Insert
     fun insertAllTasks(task: Task)
 
-//    @Delete
-//    fun deleteTask(task: Task)
 
     @Query("DELETE FROM Task WHERE Id = :Id")
     fun deleteTaskById(Id: Int)
@@ -32,6 +30,10 @@ interface TaskDoa {
 //    @Update
 //    fun updateTask(task: Task)
 //
+
+    //    @Delete
+//    fun deleteTask(task: Task)
+
 
 
 }

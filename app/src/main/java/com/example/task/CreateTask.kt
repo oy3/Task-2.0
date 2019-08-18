@@ -37,7 +37,7 @@ class CreateTask : AppCompatActivity() {
             } else {
 
                 Log.d(
-                    TAG, "onClick: Task:  ${task_name.text.toString()} " +
+                    TAG, "onClidck: Task:  ${task_name.text.toString()} " +
                             ", Description: ${task_description.text.toString()} "
                 )
                 db.taskDao().insertAllTasks(Task(task_name.text.toString(), task_description.text.toString()))
